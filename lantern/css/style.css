@@ -1,0 +1,671 @@
+/* LANTERN — styles. Original layout and styling preserved; colour palette updated. */
+
+:root{
+
+--ink:#FFF1F7;
+
+--bg-deep:#160D18;
+
+--bg-panel:#241321;
+
+--bg-panel-2:#30182A;
+
+--line:#553247;
+
+--muted:#B99AAA;
+
+--amber:#FF78B7;
+
+--amber-soft:#FFC1DD;
+
+--teal:#FF4FA3;
+
+--rose:#FF6F91;
+
+--rose-dim:#A94668;
+
+}
+
+*{box-sizing:border-box;}
+
+html,body{margin:0;padding:0;}
+
+body{
+
+background:var(--bg-deep);
+
+color:var(--ink);
+
+font-family:'Inter',sans-serif;
+
+min-height:100vh;
+
+}
+
+.wrap{
+
+display:flex;
+
+flex-direction:column;
+
+min-height:100vh;
+
+}
+
+header{
+
+padding:28px 36px 18px 36px;
+
+border-bottom:1px solid var(--line);
+
+display:flex;
+
+align-items:baseline;
+
+justify-content:space-between;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+}
+
+.brand{display:flex;align-items:baseline;gap:14px;}
+
+.brand h1{
+
+font-family:'Space Grotesk',sans-serif;
+
+font-weight:700;
+
+font-size:26px;
+
+margin:0;
+
+letter-spacing:-0.01em;
+
+}
+
+.brand h1 .dot{color:var(--amber);}
+
+.brand p{margin:0;color:var(--muted);font-size:14px;max-width:420px;line-height:1.5;}
+
+.tag{
+
+font-family:'Space Grotesk',sans-serif;
+
+font-size:12px;
+
+color:var(--bg-deep);
+
+background:var(--amber-soft);
+
+padding:5px 10px;
+
+border-radius:3px;
+
+font-weight:600;
+
+white-space:nowrap;
+
+align-self:flex-start;
+
+}
+
+main{
+
+display:flex;
+
+flex:1;
+
+min-height:0;
+
+}
+
+@media (max-width:920px){
+
+main{flex-direction:column;}
+
+}
+
+.map-panel{
+
+flex:1.55;
+
+padding:26px;
+
+display:flex;
+
+flex-direction:column;
+
+min-width:0;
+
+}
+
+.map-frame{
+
+position:relative;
+
+background:radial-gradient(ellipse at 30% 20%, #3A1D35 0%, #1B0F20 70%);
+
+border:1px solid var(--line);
+
+border-radius:4px;
+
+overflow:hidden;
+
+flex:1;
+
+}
+
+svg{display:block;width:100%;height:100%;}
+
+.map-caption{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin-top:12px;
+
+font-size:12.5px;
+
+color:var(--muted);
+
+flex-wrap:wrap;
+
+gap:8px;
+
+}
+
+.legend{display:flex;gap:16px;flex-wrap:wrap;}
+
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+
+.swatch{width:16px;height:3px;border-radius:2px;display:inline-block;}
+
+.dotswatch{width:8px;height:8px;border-radius:50%;display:inline-block;}
+
+.side-panel{
+
+flex:1;
+
+max-width:420px;
+
+min-width:320px;
+
+border-left:1px solid var(--line);
+
+padding:26px 30px 40px 30px;
+
+overflow-y:auto;
+
+}
+
+@media (max-width:920px){
+
+.side-panel{max-width:none;border-left:none;border-top:1px solid var(--line);}
+
+}
+
+section.block{margin-bottom:30px;}
+
+.block h2{
+
+font-family:'Space Grotesk',sans-serif;
+
+font-size:14px;
+
+font-weight:600;
+
+margin:0 0 12px 0;
+
+color:var(--ink);
+
+}
+
+.time-readout{
+
+font-family:'Space Grotesk',sans-serif;
+
+font-size:34px;
+
+font-weight:700;
+
+line-height:1;
+
+margin-bottom:4px;
+
+}
+
+.time-sub{color:var(--muted);font-size:13px;margin-bottom:14px;}
+
+input[type=range]{
+
+width:100%;
+
+-webkit-appearance:none;
+
+height:6px;
+
+border-radius:3px;
+
+background:linear-gradient(90deg,
+
+```
+#553247 0%, #553247 25%,
+
+#75425F 25%, #75425F 33%,
+
+#A85D83 33%, #A85D83 79%,
+
+#75425F 79%, #75425F 87%,
+
+#553247 87%, #553247 100%);
+```
+
+outline:none;
+
+margin-bottom:8px;
+
+}
+
+input[type=range]::-webkit-slider-thumb{
+
+-webkit-appearance:none;
+
+width:18px;height:18px;border-radius:50%;
+
+background:var(--amber);
+
+border:3px solid var(--bg-deep);
+
+box-shadow:0 0 0 1px var(--amber);
+
+cursor:pointer;
+
+margin-top:-6px;
+
+}
+
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:3px;}
+
+.presets{display:flex;gap:8px;flex-wrap:wrap;}
+
+.presets button{
+
+font-family:'Inter',sans-serif;
+
+font-size:12.5px;
+
+background:var(--bg-panel-2);
+
+border:1px solid var(--line);
+
+color:var(--muted);
+
+padding:6px 11px;
+
+border-radius:3px;
+
+cursor:pointer;
+
+}
+
+.presets button:hover{color:var(--ink);border-color:#9A5C7D;}
+
+.presets button.active{background:var(--amber);color:var(--bg-deep);border-color:var(--amber);font-weight:600;}
+
+.stat-row{
+
+display:flex;
+
+border:1px solid var(--line);
+
+border-radius:4px;
+
+overflow:hidden;
+
+}
+
+.stat{
+
+flex:1;
+
+padding:14px 14px;
+
+}
+
+.stat + .stat{border-left:1px solid var(--line);}
+
+.stat .label{font-size:11.5px;color:var(--muted);margin-bottom:6px;}
+
+.stat .value{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;}
+
+.stat.fast .value{color:var(--amber-soft);}
+
+.stat.safe .value{color:var(--teal);}
+
+.why-box{
+
+border-left:2px solid var(--rose);
+
+padding:12px 16px;
+
+background:rgba(255,111,145,0.09);
+
+font-size:13.5px;
+
+line-height:1.6;
+
+border-radius:0 3px 3px 0;
+
+}
+
+.why-box b{color:var(--ink);}
+
+.why-box .score-shift{
+
+font-family:'Space Grotesk',sans-serif;
+
+font-weight:600;
+
+color:var(--rose);
+
+}
+
+.report-form{display:flex;flex-direction:column;gap:10px;}
+
+select, .sevgroup{
+
+width:100%;
+
+}
+
+select{
+
+background:var(--bg-panel-2);
+
+color:var(--ink);
+
+border:1px solid var(--line);
+
+padding:9px 10px;
+
+border-radius:3px;
+
+font-family:'Inter',sans-serif;
+
+font-size:13.5px;
+
+}
+
+.sevgroup{display:flex;gap:6px;}
+
+.sevgroup button{
+
+flex:1;
+
+background:var(--bg-panel-2);
+
+border:1px solid var(--line);
+
+color:var(--muted);
+
+padding:8px 6px;
+
+border-radius:3px;
+
+font-size:12.5px;
+
+cursor:pointer;
+
+}
+
+.sevgroup button.sel{border-color:var(--rose);color:var(--rose);background:rgba(255,111,145,0.12);}
+
+.report-form button.submit{
+
+margin-top:2px;
+
+background:var(--teal);
+
+color:#2A0719;
+
+border:none;
+
+padding:10px 12px;
+
+border-radius:3px;
+
+font-family:'Space Grotesk',sans-serif;
+
+font-weight:600;
+
+font-size:13.5px;
+
+cursor:pointer;
+
+}
+
+.report-form button.submit:hover{filter:brightness(1.08);}
+
+.confirm{
+
+font-size:12.5px;
+
+color:var(--teal);
+
+min-height:16px;
+
+}
+
+.how-toggle{
+
+font-size:12.5px;
+
+color:var(--muted);
+
+cursor:pointer;
+
+text-decoration:underline;
+
+text-underline-offset:3px;
+
+background:none;border:none;padding:0;
+
+font-family:'Inter',sans-serif;
+
+}
+
+.how-body{
+
+font-size:13px;
+
+line-height:1.65;
+
+color:var(--muted);
+
+margin-top:10px;
+
+display:none;
+
+}
+
+.how-body.open{display:block;}
+
+.how-body code{
+
+color:var(--amber-soft);
+
+background:var(--bg-panel-2);
+
+padding:1px 5px;
+
+border-radius:2px;
+
+font-size:12px;
+
+}
+
+footer{
+
+padding:16px 36px;
+
+border-top:1px solid var(--line);
+
+color:var(--muted);
+
+font-size:11.5px;
+
+}
+
+/* =====================================================================
+
+Round 2 additions (source/destination pickers, factor breakdown,
+
+database status + notices). Uses the existing colour tokens only.
+
+===================================================================== */
+
+.field-label{font-size:11.5px;color:var(--muted);margin:0 0 5px 0;display:block;}
+
+.route-pick{display:flex;flex-direction:column;gap:10px;}
+
+.route-pick select:focus-visible,
+
+.report-form select:focus-visible,
+
+.presets button:focus-visible,
+
+.sevgroup button:focus-visible,
+
+.report-form button.submit:focus-visible,
+
+.how-toggle:focus-visible,
+
+input[type=range]:focus-visible{outline:2px solid var(--amber-soft);outline-offset:2px;}
+
+.factor-table{
+
+width:100%;
+
+border-collapse:collapse;
+
+margin-top:12px;
+
+font-size:12.5px;
+
+}
+
+.factor-table th{
+
+text-align:left;
+
+font-weight:500;
+
+color:var(--muted);
+
+padding:0 0 6px 0;
+
+font-size:11.5px;
+
+}
+
+.factor-table th:not(:first-child),
+
+.factor-table td:not(:first-child){text-align:right;}
+
+.factor-table td{padding:6px 0;border-top:1px solid var(--line);}
+
+.factor-table td:first-child{color:var(--muted);}
+
+.factor-table td.fast{color:var(--amber-soft);}
+
+.factor-table td.safe{color:var(--teal);}
+
+.factor-note{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.5;}
+
+.db-status{
+
+display:flex;
+
+align-items:flex-start;
+
+gap:8px;
+
+font-size:12px;
+
+color:var(--muted);
+
+line-height:1.5;
+
+margin-bottom:12px;
+
+}
+
+.db-status .pip{
+
+flex:none;
+
+width:8px;height:8px;border-radius:50%;
+
+margin-top:5px;
+
+background:var(--muted);
+
+}
+
+.db-status.ok .pip{background:var(--teal);}
+
+.db-status.warn .pip{background:var(--amber);}
+
+.notice{
+
+font-size:12.5px;
+
+line-height:1.5;
+
+color:var(--amber-soft);
+
+background:rgba(255,120,183,0.08);
+
+border-left:2px solid var(--amber);
+
+border-radius:0 3px 3px 0;
+
+padding:8px 12px;
+
+margin-bottom:12px;
+
+}
+
+.notice[hidden]{display:none;}
+
+.confirm.warn{color:var(--amber-soft);}
+
+.report-form button.submit:disabled{opacity:.6;cursor:progress;filter:none;}
+
+.nowrap{white-space:nowrap;}
+
+/* Desktop: keep the map fixed in view and let the side panel scroll on its
+
+own. The original CSS already set overflow-y:auto / min-height:0 for this;
+
+the wrapper just needs a fixed height so the extra Round 2 controls don't
+
+stretch the map frame. Mobile keeps the original stacked, page-scroll layout. */
+
+@media (min-width:921px){
+
+.wrap{height:100vh;}
+
+.map-panel{min-height:0;}
+
+.map-frame{min-height:0;}
+
+.side-panel{min-height:0;}
+
+}

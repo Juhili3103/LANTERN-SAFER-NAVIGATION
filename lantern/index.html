@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lantern — time-aware safer routes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <h1>Lantern<span class="dot">.</span></h1>
+      <p>Turn-by-turn navigation, overlaid with crowd-reported incidents and streetlight coverage — reweighted for the hour you're actually walking.</p>
+    </div>
+    <div class="tag">Women's Safety &amp; Social Impact — Hackathon Demo</div>
+  </header>
+
+  <main>
+    <div class="map-panel">
+      <div class="map-frame">
+        <svg id="map" viewBox="0 0 900 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Demo street map showing the fastest route and the recommended safer route"></svg>
+      </div>
+      <div class="map-caption">
+        <div class="legend">
+          <span><span class="swatch" style="background:var(--teal)"></span> Recommended (safety-weighted)</span>
+          <span><span class="swatch" style="background:var(--amber)"></span> Fastest (distance-only)</span>
+          <span><span class="dotswatch" style="background:var(--rose)"></span> Active incident report</span>
+        </div>
+        <div id="hourLabel">—</div>
+      </div>
+    </div>
+
+    <div class="side-panel">
+
+      <!-- Round 2: source / destination pickers -->
+      <section class="block">
+        <h2>Where are you going?</h2>
+        <div class="route-pick">
+          <div>
+            <label class="field-label" for="startSelect">From</label>
+            <select id="startSelect"></select>
+          </div>
+          <div>
+            <label class="field-label" for="destSelect">To</label>
+            <select id="destSelect"></select>
+          </div>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2>Time of departure</h2>
+        <div class="time-readout" id="timeReadout">6:00 PM</div>
+        <div class="time-sub" id="timeSub">Sunset — visibility dropping</div>
+        <input type="range" id="hourSlider" min="0" max="23" step="1" value="18" aria-label="Departure hour">
+        <div class="presets">
+          <button data-hour="8">8am · Commute</button>
+          <button data-hour="14">2pm · Midday</button>
+          <button data-hour="18" class="active">6pm · Dusk</button>
+          <button data-hour="23">11pm · Late night</button>
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 id="routeTitle">Metro Station → Home</h2>
+        <div class="stat-row">
+          <div class="stat fast">
+            <div class="label">Fastest route</div>
+            <div class="value" id="fastMeta">—</div>
+          </div>
+          <div class="stat safe">
+            <div class="label">Recommended</div>
+            <div class="value" id="safeMeta">—</div>
+          </div>
+        </div>
+        <!-- Round 2: which safety factors each route is exposed to -->
+        <table class="factor-table" id="factorTable" aria-label="Safety factors compared between routes">
+          <thead>
+            <tr><th scope="col">Avg. risk per segment</th><th scope="col">Fastest</th><th scope="col">Recommended</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Lighting</td><td class="fast" id="fLightFast">—</td><td class="safe" id="fLightSafe">—</td></tr>
+            <tr><td>Isolation</td><td class="fast" id="fIsoFast">—</td><td class="safe" id="fIsoSafe">—</td></tr>
+            <tr><td>Incidents</td><td class="fast" id="fIncFast">—</td><td class="safe" id="fIncSafe">—</td></tr>
+          </tbody>
+        </table>
+        <div class="factor-note">Lower is safer. Values are the average penalty points each factor adds per street segment at the selected hour.</div>
+      </section>
+
+      <section class="block">
+        <h2>Why the route changes</h2>
+        <div class="why-box" id="whyBox">—</div>
+      </section>
+
+      <section class="block">
+        <h2>Report an incident</h2>
+        <!-- Round 2: database status + friendly error notice -->
+        <div class="db-status" id="dbStatus" role="status"><span class="pip"></span><span id="dbStatusText">Checking report database…</span></div>
+        <div class="notice" id="dbNotice" role="alert" hidden></div>
+        <div class="report-form">
+          <select id="edgeSelect" aria-label="Street segment"></select>
+          <div class="sevgroup" id="sevGroup">
+            <button data-sev="1">Minor</button>
+            <button data-sev="2" class="sel">Moderate</button>
+            <button data-sev="3">Severe</button>
+          </div>
+          <button class="submit" id="submitReport">Add report for current time</button>
+          <div class="confirm" id="confirmMsg" role="status"></div>
+        </div>
+      </section>
+
+      <section class="block">
+        <button class="how-toggle" id="howToggle">How the safety score works ▾</button>
+        <div class="how-body" id="howBody">
+          Every street segment gets a <b>safety penalty</b> recalculated for the exact hour you select — not one fixed score:<br><br>
+          <code>lighting</code> — unlit segments are penalized only after dark (8pm–6am); irrelevant in daylight.<br>
+          <code>foot traffic</code> — each street type has a typical "how busy is this normally" curve by hour; empty-at-night streets score worse after dark even with zero reports.<br>
+          <code>incidents</code> — crowd reports are weighted by how close their reported hour is to yours, so a string of 11pm reports barely affects a 9am walk, and vice versa.<br><br>
+          The "fastest" route always minimizes distance. The "recommended" route minimizes <i>distance × (1 + 2.5 × penalty)</i> for your selected hour — so the two routes can diverge completely between 6pm and 11pm on the same street grid.<br><br>
+          Reports you submit are saved to the database when one is connected, and are added on top of the synthetic baseline reports.
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>Demo dataset — the street grid, streetlight coverage and baseline incident reports are synthetic, for illustration. Not a real map. Reports you submit are stored only if a database is connected.</footer>
+</div>
+
+<!-- Classic scripts (no build step, works from file://). Order matters. -->
+<script src="js/config.js"></script>
+<script src="js/data.js"></script>
+<script src="js/safety.js"></script>
+<script src="js/routing.js"></script>
+<script src="js/supabase.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
